@@ -1,7 +1,6 @@
 package us.kbase.common.utils.sortjson.test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedOutputStream;
@@ -13,7 +12,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Random;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 
@@ -110,8 +109,8 @@ public class LowMemorySorterTest {
 			s.writeIntoStream(new ByteArrayOutputStream());
 			fail("sorted with too little mem");
 		} catch (TooManyKeysException tmke) {
-			assertThat("got correct exception", tmke.getLocalizedMessage(),
-					is("Memory necessary for sorting map keys exceeds the limit "
+			assertTrue("got correct exception", tmke.getMessage().contains(
+					"Memory necessary for sorting map keys exceeds the limit "
 						+ (maxmem - 1) + " bytes at /"));
 		}
 	}

@@ -8,7 +8,6 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
-import us.kbase.common.utils.sortjson.FastUTF8JsonSorter;
 import us.kbase.common.utils.sortjson.LowMemoryUTF8JsonSorter;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -55,18 +54,13 @@ public class RandomGenerationLongTest {
 			timeFile = System.currentTimeMillis() - timeFile;
 			Assert.assertArrayEquals("i=" + i + " (files)", expectedJson, actualJson);
 			actualJson = null;
-			long timeFast = System.currentTimeMillis();
-			actualJson = sortWithByteSorter(unsortedJson);
-			timeFast = System.currentTimeMillis() - timeFast;
-			Assert.assertArrayEquals("i=" + i, expectedJson, actualJson);
 			if (PRINT_TIMING) {
 				System.out.print(String.format("%4d ", i));
 				System.out.print(String.format("%10d   ", unsortedJson.length));
 				System.out.print(String.format("%6d       ", timeGener));
 				System.out.print(String.format("%6d    ", timeJackson));
 				System.out.print(String.format("%6d    ", timeBytes));
-				System.out.print(String.format("%6d    ", timeFile));
-				System.out.print(String.format("%6d ", timeFast));
+				System.out.print(String.format("%6d ", timeFile));
 				System.out.println();
 			}
 		}
@@ -101,10 +95,6 @@ public class RandomGenerationLongTest {
 		return baos.toByteArray();
 	}
 
-	private static byte[] sortWithByteSorter(byte[] data) throws Exception {
-		return new FastUTF8JsonSorter(data).getSorted();
-	}
-	
 	private static byte[] sortWithJackson(byte[] json) throws Exception {
 		ObjectMapper SORT_MAPPER = new ObjectMapper();
 		SORT_MAPPER.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
