@@ -9,7 +9,11 @@ This repository was made based on https://github.com/kbase/java_common in order 
         os.close();
 ```
 
-#Dependencies
+##Dependencies
 
-- Jackson FastXML
+- Jackson FasterXML
 - JUnit
+
+##Contributions
+
+Feel free to make your suggestions and pull requests.
